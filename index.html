@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkbox-tree</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <style>
+        .my-filter-li {
+            padding-left: 5px;
+        }
+
+        .filled-in+span:not(.lever) {
+            padding-left: 25px;
+            color: darkolivegreen;
+            font-size: 0.8rem;
+        }
+
+        .my-filter-ul {
+            list-style: none;
+            line-height: 2em;
+            margin: 0 0 0 20px;
+            font-family: Arial;
+        }
+
+        .my-filter-li {
+            font-size: 16px;
+            position: relative;
+        }
+
+        .my-filter-li:before {
+            position: absolute;
+            left: -15px;
+            top: -8px;
+            content: '';
+            display: block;
+            border-left: 1px solid teal;
+            height: 23px;
+            border-bottom: 1px solid teal;
+            width: 20px;
+        }
+
+        .my-filter-li:after {
+            position: absolute;
+            left: -15px;
+            top: 0px;
+            content: '';
+            display: block;
+            border-left: 1px solid teal;
+            height: 100%;
+        }
+
+        .my-filter-li:last-child:after {
+            display: none;
+        }
+
+        .root100 {
+            margin: 0 0 0 -5px;
+        }
+
+        .root100:before,
+        .root100:after {
+            display: none;
+        }
+
+        span.expand_collapse_icon {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+    </div>
+
+    <div id="myTest">
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js_custom/SearchClass.js"></script>
+    <script>
+
+        function renderTheFirstLayout(id) {
+            const layout = `
+            <div class="row">
+            <div class="input-field col s6" style="margin-left: 15px;">
+                <input id="${id}_search" type="text" class="validate">
+            </div>
+            <div class="input-field col s2" style="margin-left: 15px;">
+                <a id="${id}_search_btn" class="waves-effect waves-light btn" style="margin-top: 10px; margin-left: -35px;">Search</a>
+            </div>
+            <div class="col s3">
+                <div style="margin-top: 40px">
+                    <a href="#" id="${id}_select_all">Select All</a> /
+                    <a href="#" id="${id}_reset_all">Reset All</a>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="filterSearchBody" style="max-height: 200px; overflow-y:auto; padding-left: 40px;">
+                    <div id="${id}_container" style="color: black;">
+                        <div id="${id}_ul_container">
+                            <!-- this is the place to put checkbox tree -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        return layout;
+        }
+
+        (function () {
+            const container = document.querySelector('#container');
+            container.innerHTML = renderTheFirstLayout('fund_org_tree');
+
+            const myTest = document.querySelector('#myTest');
+            myTest.innerHTML = renderTheFirstLayout('myTest');
+
+            const myInstance = new SearchClass('fund_org_tree', 'https://api.myjson.com/bins/y2i5r');
+            myInstance.start();
+
+            const myInstance1 = new SearchClass('myTest', 'https://api.myjson.com/bins/y2i5r');
+            myInstance1.start();
+        })();
+
+        
+
+    </script>
+</body>
+
+</html>
